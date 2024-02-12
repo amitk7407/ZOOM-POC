@@ -1,0 +1,7 @@
+{
+  "name": "Zoom Meeting SDK Auth Endpoint sample",
+  "description": "Generate a Meeting SDK JWT to join Zoom meetings and webinars with the Meeting SDK.",
+  "repository": "https://github.com/zoom/zoom-BE",
+  "logo": "https://avatars1.githubusercontent.com/u/29114944?s=200&v=4",
+  "keywords": ["zoom", "meetingsdk", "jwt", "node.js", "express"]
+}
