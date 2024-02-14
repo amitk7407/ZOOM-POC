@@ -35,7 +35,7 @@ const listZoomMeetings = async (userId) => {
         "Content-Type": "application/json",
       },
     });
-    const meetings = resp.data.meetings;
+    const meetings = resp.data;
 
     // const newArray = meetings.map((obj) =>
     //   ["id", "topic"].reduce((newObj, key) => {
@@ -86,7 +86,29 @@ const createZoomMeeting = async (data, userId) => {
   }
 };
 
+const ListZoomRecordings = async (userId) => {
+  const user = `${ userId ? userId: 'me' }`
+
+  try {
+    const resp = await axios({
+      method: "get",
+      url: `https://api.zoom.us/v2/users/${user}/recordings`,
+      headers: {
+        Authorization: "Bearer " + `${await getAccessToken()} `,
+        "Content-Type": "application/json",
+      },
+    });
+
+    return resp.data;
+  } catch (err) {
+    if (err.status == undefined) {
+      console.log("Error : ", err);
+    }
+  }
+};
+
 module.exports = {
   createZoomMeeting, 
   listZoomMeetings,
+  ListZoomRecordings
 };

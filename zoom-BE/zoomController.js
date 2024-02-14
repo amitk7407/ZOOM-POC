@@ -6,6 +6,7 @@ const KJUR = require("jsrsasign");
 const {
   createZoomMeeting,
   listZoomMeetings,
+  ListZoomRecordings
 } = require("./zoomAPI.js");
 
 const getMeetingSDKSignature = asyncHandler(async (req, res) => {
@@ -37,7 +38,7 @@ const getMeetingSDKSignature = asyncHandler(async (req, res) => {
 });
 
 const CreateMeeting = asyncHandler(async (req, res) => {
-  const { invitees } = req.body;
+  const { invitees, topic } = req.body;
   
   const data = {
     password: "123456",
@@ -49,11 +50,12 @@ const CreateMeeting = asyncHandler(async (req, res) => {
         email: invitee
       })),
       registration_type: 1,
-      join_before_host: true, // Enable 'Join Before Host'
+      // join_before_host: true, // Enable 'Join Before Host'
       waiting_room: false,
       host_video: true,
       participant_video: true,
     },
+    topic,
     type: 1
   }
 
@@ -64,7 +66,7 @@ const CreateMeeting = asyncHandler(async (req, res) => {
 
 
 const ScheduleMeeting = asyncHandler(async (req, res) => {
-  const { invitees, startTime, userId } = req.body;
+  const { invitees, startTime, userId,topic } = req.body;
 
   const data = {
     password: "123456",
@@ -76,13 +78,14 @@ const ScheduleMeeting = asyncHandler(async (req, res) => {
         email: invitee
       })),
       registration_type: 1,
-      join_before_host: true, // Enable 'Join Before Host'
+      // join_before_host: true, // Enable 'Join Before Host'
       waiting_room: false,
       host_video: true,
       participant_video: true,
     },
     timezone: 'UTC',
     start_time: startTime,
+    topic,
     type: 2
   }
 
@@ -104,10 +107,23 @@ const ListMeetings = asyncHandler(async (req, res) => {
   }
 });
 
+const ListRecordings = asyncHandler(async (req, res) => {
+  const { userId } = req.body;
+
+  const recordings = await ListZoomRecordings(userId);
+  if (recordings === undefined) {
+    res.status(400);
+    throw new Error("No recording found");
+  } else {
+    res.status(201).json({ recordings });
+  }
+});
+
 
   module.exports = {
   getMeetingSDKSignature,
   CreateMeeting,
   ScheduleMeeting,
   ListMeetings,
+  ListRecordings
 };

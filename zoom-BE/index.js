@@ -8,6 +8,7 @@ const {
   CreateMeeting,
   ScheduleMeeting,
   ListMeetings,
+  ListRecordings
 } = require("./zoomController.js");
 
 const app = express()
@@ -21,5 +22,6 @@ app.post('/generate-zoom-signature', getMeetingSDKSignature);
 app.post('/create-meeting', CreateMeeting);
 app.post('/schedule-meeting', ScheduleMeeting);
 app.get('/list-meetings', ListMeetings);
+app.get('/list-recordings', ListRecordings);
 
 app.listen(port, () => console.log(`Zoom Meeting SDK Auth Endpoint Sample Node.js listening on port ${port}!`))
