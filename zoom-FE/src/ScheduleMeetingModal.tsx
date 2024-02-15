@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import './App.css';
@@ -6,32 +6,58 @@ import './App.css';
 const modalRoot = document.getElementById('modal-root');
 
 export const ScheduleMeetingModal: React.FC<{ showScheduleModal: boolean; onClose: () => void; }> = ({ showScheduleModal, onClose }) => {
-  const scheduleMeeting = () => {
-    const time = document.getElementById('start_time') as HTMLInputElement;
+  const [meetingTime, setMeetingTime] = useState<string>('');
+  const [topic, setTopic] = useState<string>('');
 
+  const scheduleMeeting = () => {
     fetch('http://localhost:4000/schedule-meeting', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        invitees: ["mohit.kumar@arbolus.com", "amitk7407@gmail.com", "amit.kumar@arbolus.com"],
-        startTime: new Date(time.value),
-      }),
-    }).then(res => res.json())
-    .then(response => {
-      console.log(response)
-      onClose()
-    }).catch(error => {
-      console.error(error)
+        invitees: [
+          'amit.jnit1@gmail.com',
+          'mohit.kumar@arbolus.com',
+          'amit.kumar@arbolus.com'
+        ],
+        startTime: new Date(meetingTime),
+        topic
+      })
     })
-  }
+      .then(res => res.json())
+      .then(response => {
+        console.log(response);
+        onClose();
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
   return (
     <>
       {showScheduleModal && createPortal(
-        <div className='modal'>
-          <div className='schedule'>
-            <input type="datetime-local" id="start_time" name="start_time" />
-            <button className='submit' onClick={scheduleMeeting}>Submit</button>
+        <div className="modal">
+          <div className="form-container">
+            <div className='imgContainer'>
+                <img src='/logo-connect.svg' alt='arbolus' />
+                <label>Arbolus Connect</label>
+              </div>
+              <form onSubmit={scheduleMeeting}>
+              <label>
+                Meeting Topic:
+                <input
+                  type="text"
+                  value={topic}
+                  name="topic"
+                  onChange={(e) => setTopic(e.target.value)}
+                />
+              </label>
+                <label>
+                  Meeting Time:
+                  <input type="datetime-local" id="start_time" name="start_time" onChange={e => setMeetingTime(e.target.value)}/>
+                </label>
+                <input type='submit' value='Schedule Meeting' />
+              </form>
             <button onClick={onClose}>Close</button>
           </div>
         </div>,

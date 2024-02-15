@@ -5,9 +5,15 @@
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  overflow: scroll;
 }
 
-.join-call {
+.btn-container {
+  display: flex;
+  gap: 16px
+}
+
+.form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,7 +38,7 @@
   font-weight: 600;
 }
 
-.join-call form {
+form {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -41,7 +47,7 @@
   border-radius: 5px;
 }
 
-.join-call label {
+label {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -65,22 +71,10 @@ input[type=submit], .submit {
   cursor: pointer;
 }
 
-.join-call input[type=submit]:hover, .submit:hover {
+input[type=submit]:hover, .submit:hover {
   background-color: #45a049;
 }
 
 .modal {
   display: block !important;
-}
-
-.schedule {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  width: 350px !important;
-  background-color: #f2f2f2;
-  margin: auto;
-  padding: 25px;
-  height: 100%;
 }

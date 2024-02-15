@@ -21,7 +21,7 @@ export const JoinMeetingModal: React.FC<{ showJoinModal:boolean; onClose:()=>voi
   <>
     {showJoinModal && createPortal(
       <div className="modal">
-        <div className="join-call">
+        <div className="form-container">
           <div className='imgContainer'>
               <img src='/logo-connect.svg' alt='arbolus' />
               <label>Arbolus Connect</label>
@@ -47,7 +47,7 @@ export const JoinMeetingModal: React.FC<{ showJoinModal:boolean; onClose:()=>voi
                 />
               </label>
               <label>
-                password:
+                Password:
                 <input
                   type="text"
                   value={password}
@@ -56,7 +56,7 @@ export const JoinMeetingModal: React.FC<{ showJoinModal:boolean; onClose:()=>voi
                   required
                 />
               </label>
-              <input type='submit' value='Join' />
+              <input type='submit' value='Join Meeting' />
             </form>
           <button onClick={onClose}>Close</button>
         </div>
