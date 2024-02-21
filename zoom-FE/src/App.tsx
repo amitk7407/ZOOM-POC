@@ -46,6 +46,22 @@ export const App: React.FC = () => {
       });
   };
 
+  const getChat = (meetingId:string) => {
+    // setMeetingList([]);
+    fetch(`http://localhost:4000/get-chat?meetingId=${meetingId}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(res => res.json())
+      .then(response => {
+        console.log(response);
+        // setRecordingList(response.recordings.meetings);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   return (
     <div className='app'>
       <div className='btn-container'>
@@ -75,7 +91,7 @@ export const App: React.FC = () => {
         return (
           <div key={recording.id}>
             <h2>{recording.topic}</h2>
-            {videoFile?.download_url && (
+            {/* {videoFile?.download_url && (
               <iframe
                 width="100%"
                 id="videoId"
@@ -85,19 +101,22 @@ export const App: React.FC = () => {
                 allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
                 sandbox="allow-same-origin allow-scripts allow-forms"
               ></iframe>
-            )}
+            )} */}
             {videoFile?.download_url && (
-              <video controls>
-                <source src={videoFile.download_url} type="video/mp4" />
-                {transcriptFile?.download_url && (
-                  <track
-                    kind="subtitles"
-                    src={transcriptFile.download_url}
-                    srcLang="es"
-                    label="Spanish"
-                  />
-                )}
-              </video>
+              <>
+                <video controls>
+                  <source src={videoFile.download_url} type="video/mp4" />
+                  {transcriptFile?.download_url && (
+                    <track
+                      kind="subtitles"
+                      src={transcriptFile.download_url}
+                      srcLang="es"
+                      label="Spanish"
+                    />
+                  )}
+                </video>
+                <button onClick={() => getChat(recording.id)}>Get Chat</button>
+              </>
             )}
           </div>
         );

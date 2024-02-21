@@ -6,7 +6,8 @@ const KJUR = require("jsrsasign");
 const {
   createZoomMeeting,
   listZoomMeetings,
-  ListZoomRecordings
+  ListZoomRecordings,
+  getMeetingChat
 } = require("./zoomAPI.js");
 
 const getMeetingSDKSignature = asyncHandler(async (req, res) => {
@@ -43,14 +44,13 @@ const CreateMeeting = asyncHandler(async (req, res) => {
   const data = {
     password: "123456",
     settings: {
-      // "auto_recording":"local",
+      auto_recording: "cloud",
       email_notification: true,
-      meeting_authentication: true,
+      meeting_authentication: false,
       meeting_invitees: invitees.map(invitee => ({
         email: invitee
       })),
-      registration_type: 1,
-      // join_before_host: true, // Enable 'Join Before Host'
+      join_before_host: true, // Enable 'Join Before Host'
       waiting_room: false,
       host_video: true,
       participant_video: true,
@@ -71,14 +71,13 @@ const ScheduleMeeting = asyncHandler(async (req, res) => {
   const data = {
     password: "123456",
     settings: {
-      // "auto_recording":"local",
+      auto_recording: "cloud",
       email_notification: true,
-      meeting_authentication: true,
+      meeting_authentication: false,
       meeting_invitees: invitees.map(invitee => ({
         email: invitee
       })),
-      registration_type: 1,
-      // join_before_host: true, // Enable 'Join Before Host'
+      join_before_host: true, // Enable 'Join Before Host'
       waiting_room: false,
       host_video: true,
       participant_video: true,
@@ -119,11 +118,23 @@ const ListRecordings = asyncHandler(async (req, res) => {
   }
 });
 
+const getChat = asyncHandler(async (req, res) => {
+  const { meetingId } = req.query;
 
-  module.exports = {
+  const chats = await getMeetingChat(meetingId);
+  if (chats === undefined) {
+    res.status(400);
+    throw new Error("No recording found");
+  } else {
+    res.status(201).json({ chats });
+  }
+});
+
+module.exports = {
   getMeetingSDKSignature,
   CreateMeeting,
   ScheduleMeeting,
   ListMeetings,
-  ListRecordings
+  ListRecordings,
+  getChat
 };

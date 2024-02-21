@@ -13,7 +13,7 @@ export const StartMeeting: React.FC = () => {
   
   const queryParams = new URLSearchParams(location.search);
   const meetingNumber = queryParams.get('mn') || '';
-  const password = queryParams.get('pwd') || '';
+  const password = queryParams.get('password') || '';
   const role = queryParams.get('role') || '0';
   const email = queryParams.get('email') || '';
   const zak = queryParams.get('zak') || undefined;

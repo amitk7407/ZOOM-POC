@@ -26,7 +26,7 @@ export const JoinMeetingModal: React.FC<{ showJoinModal:boolean; onClose:()=>voi
               <img src='/logo-connect.svg' alt='arbolus' />
               <label>Arbolus Connect</label>
             </div>
-            <form onSubmit={handleSubmit}>
+            <div className='form'>
               <label>
                 Email:
                 <input
@@ -56,8 +56,8 @@ export const JoinMeetingModal: React.FC<{ showJoinModal:boolean; onClose:()=>voi
                   required
                 />
               </label>
-              <input type='submit' value='Join Meeting' />
-            </form>
+              <button className='button' onClick={handleSubmit}>Join Meeting</button>
+            </div>
           <button onClick={onClose}>Close</button>
         </div>
       </div>,

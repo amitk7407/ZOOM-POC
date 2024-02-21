@@ -42,22 +42,22 @@ export const ScheduleMeetingModal: React.FC<{ showScheduleModal: boolean; onClos
                 <img src='/logo-connect.svg' alt='arbolus' />
                 <label>Arbolus Connect</label>
               </div>
-              <form onSubmit={scheduleMeeting}>
-              <label>
-                Meeting Topic:
-                <input
-                  type="text"
-                  value={topic}
-                  name="topic"
-                  onChange={(e) => setTopic(e.target.value)}
-                />
-              </label>
+              <div className='form'>
+                <label>
+                  Meeting Topic:
+                  <input
+                    type="text"
+                    value={topic}
+                    name="topic"
+                    onChange={(e) => setTopic(e.target.value)}
+                  />
+                </label>
                 <label>
                   Meeting Time:
                   <input type="datetime-local" id="start_time" name="start_time" onChange={e => setMeetingTime(e.target.value)}/>
                 </label>
-                <input type='submit' value='Schedule Meeting' />
-              </form>
+                <button className='button' onClick={scheduleMeeting}>Schedule Meeting</button>
+              </div>
             <button onClick={onClose}>Close</button>
           </div>
         </div>,

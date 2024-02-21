@@ -66,18 +66,6 @@ const createZoomMeeting = async (data, userId) => {
       data: JSON.stringify(data),
     });
 
-    // const a = await axios({
-    //   method: "post",
-    //   url: `https://api.zoom.us/v2/meetings/${resp.data.id}/invite_links`,
-    //   headers: {
-    //     Authorization: "Bearer " + `${await getAccessToken()} `,
-    //     "Content-Type": "application/json",
-    //   },
-    //   data: JSON.stringify({ attendees: [{ name: "Jill Chill" }] }),
-    // })
-
-    // console.log(a.attendees)
-
     return resp.data;
   } catch (err) {
     if (err.status == undefined) {
@@ -92,7 +80,26 @@ const ListZoomRecordings = async (userId) => {
   try {
     const resp = await axios({
       method: "get",
-      url: `https://api.zoom.us/v2/users/${user}/recordings`,
+      url: `https://api.zoom.us/v2/users/${user}/recordings?from=2024-02-10`,
+      headers: {
+        Authorization: "Bearer " + `${await getAccessToken()} `,
+        "Content-Type": "application/json",
+      },
+    });
+
+    return resp.data;
+  } catch (err) {
+    if (err.status == undefined) {
+      console.log("Error : ", err);
+    }
+  }
+};
+
+const getMeetingChat = async (meetingId) => {
+  try {
+    const resp = await axios({
+      method: "get",
+      url: `https://api.zoom.us/v2/meetings/${meetingId}/recordings?file_type=CHAT`,
       headers: {
         Authorization: "Bearer " + `${await getAccessToken()} `,
         "Content-Type": "application/json",
@@ -110,5 +117,6 @@ const ListZoomRecordings = async (userId) => {
 module.exports = {
   createZoomMeeting, 
   listZoomMeetings,
-  ListZoomRecordings
+  ListZoomRecordings,
+  getMeetingChat
 };

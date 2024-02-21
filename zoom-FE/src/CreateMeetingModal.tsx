@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router';
 
 interface CreateMeetingModalProps {
   showCreateModal: boolean;
@@ -12,6 +13,8 @@ export const CreateMeetingModal: React.FC<CreateMeetingModalProps> = ({
   showCreateModal,
   onClose
 }) => {
+  const navigate = useNavigate()
+
   const [topic, setTopic] = useState<string>('');
 
   const createMeeting = () => {
@@ -40,10 +43,7 @@ export const CreateMeetingModal: React.FC<CreateMeetingModalProps> = ({
           zakCode = param[0] === 'zak' ? param[1] : '';
         });
 
-        window.open(
-          `http://localhost:3002/meeting?mn=${response.id}&email=amit.kumar@arbolus.com&role=1&pwd=${response.password}&zak=${zakCode}`,
-          '_blank'
-        );
+        navigate(`/meeting?mn=${response.id}&email=amit.kumar@arbolus.com&role=1&pwd=${response.password}&zak=${zakCode}`);
       })
       .catch(error => {
         console.error(error);
@@ -59,18 +59,18 @@ export const CreateMeetingModal: React.FC<CreateMeetingModalProps> = ({
               <img src='/logo-connect.svg' alt='arbolus' />
               <label>Arbolus Connect</label>
             </div>
-            <form onSubmit={createMeeting}>
-            <label>
-              Meeting Topic:
-              <input
-                type="text"
-                value={topic}
-                name="topic"
-                onChange={(e) => setTopic(e.target.value)}
-              />
-            </label>
-              <input type='submit' value='Create Meeting' />
-            </form>
+            <div className='form'>
+              <label>
+                Meeting Topic:
+                <input
+                  type="text"
+                  value={topic}
+                  name="topic"
+                  onChange={(e) => setTopic(e.target.value)}
+                />
+              </label>
+              <button className='button' onClick={createMeeting}>Create Meeting</button>
+            </div>
           <button onClick={onClose}>Close</button>
         </div>
       </div>,

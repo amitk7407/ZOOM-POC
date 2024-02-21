@@ -38,7 +38,7 @@
   font-weight: 600;
 }
 
-form {
+.form {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -61,7 +61,7 @@ input[type=text], input[type=email], input[type=datetime-local] {
   border-radius: 4px;
 }
 
-input[type=submit], .submit {
+.button {
   width: 100%;
   background-color: #4CAF50;
   color: white;
@@ -71,7 +71,7 @@ input[type=submit], .submit {
   cursor: pointer;
 }
 
-input[type=submit]:hover, .submit:hover {
+.button:hover {
   background-color: #45a049;
 }
 
