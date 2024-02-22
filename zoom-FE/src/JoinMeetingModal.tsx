@@ -14,7 +14,7 @@ export const JoinMeetingModal: React.FC<{ showJoinModal:boolean; onClose:()=>voi
   const [password, setPassword] = useState<string>('');
 
   const handleSubmit = () => {
-    navigate(`/meeting?mn=${meetingNumber}&email=${email}&role=0&password=${password}`);
+    navigate(`/meeting?mn=${meetingNumber}&email=${email}&role=0&pwd=${password}`);
   }
 
   return (
